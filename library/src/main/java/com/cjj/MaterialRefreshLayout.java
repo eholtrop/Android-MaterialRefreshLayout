@@ -186,7 +186,7 @@ public class MaterialRefreshLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (isRefreshing) return true;
+        if (isRefreshing || canChildScrollUp()) return false;
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mTouchY = ev.getY();
@@ -227,8 +227,8 @@ public class MaterialRefreshLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        if (isRefreshing) {
-            return super.onTouchEvent(e);
+        if (isRefreshing || canChildScrollUp()) {
+            return false;
         }
 
         switch (e.getAction()) {
