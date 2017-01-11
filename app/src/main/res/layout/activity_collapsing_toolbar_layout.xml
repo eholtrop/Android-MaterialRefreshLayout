@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.cjj.android_materialrefreshlayout.CollapsingToolbarLayout">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/BaseTheme.AppBarOverlay">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="228dp"
+            app:layout_scrollFlags="scroll"/>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/BaseTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/content_collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false"
+            tools:showIn="@layout/activity_collapsing_toolbar_layout">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lorem_ipsum"/>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.cjj.MaterialRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

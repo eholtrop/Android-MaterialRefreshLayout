@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
@@ -37,6 +38,8 @@ public class MaterialRefreshLayout extends FrameLayout {
     protected float mWaveHeight;
     protected float mHeadHeight;
     private View mChildView;
+    private AppBarLayout appBarLayout;
+    private int appBarOffset;
     protected boolean isRefreshing;
     private float mTouchY;
     private float mCurrentY;
@@ -122,7 +125,6 @@ public class MaterialRefreshLayout extends FrameLayout {
         t.recycle();
     }
 
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -186,7 +188,9 @@ public class MaterialRefreshLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (isRefreshing || canChildScrollUp()) return false;
+        if (isRefreshing || canChildScrollUp() || !isAppBarExpanded()) {
+            return false;
+        }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mTouchY = ev.getY();
@@ -227,7 +231,7 @@ public class MaterialRefreshLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        if (isRefreshing || canChildScrollUp()) {
+        if (isRefreshing || canChildScrollUp() || !isAppBarExpanded()) {
             return false;
         }
 
@@ -408,6 +412,18 @@ public class MaterialRefreshLayout extends FrameLayout {
         this.isOverlay = isOverLay;
     }
 
+    public void setAppBarLayout(AppBarLayout appBar) {
+        this.appBarLayout = appBar;
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                appBarOffset = verticalOffset;
+            }
+        });
+
+    }
+
 //    public void setProgressValue(int progressValue) {
 //        this.progressValue = progressValue;
 //        mMaterialHeaderView.setProgressValue(progressValue);
@@ -427,6 +443,15 @@ public class MaterialRefreshLayout extends FrameLayout {
                 fl.requestLayout();
             }
         });
+    }
+
+    public boolean isAppBarExpanded() {
+        if(appBarLayout != null) {
+            boolean isExpanded = Math.abs(appBarOffset) == 0;
+            return isExpanded;
+        }
+
+        return true;
     }
 
     /**

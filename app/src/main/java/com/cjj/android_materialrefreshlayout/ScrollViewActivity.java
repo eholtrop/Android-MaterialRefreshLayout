@@ -71,6 +71,9 @@ public class ScrollViewActivity extends BaseActivity implements View.OnClickList
                 startActivity(new Intent(this,OverLayActivity.class));
                 break;
 
+            case R.id.collapsing_toolbar:
+                startActivity(new Intent(this, CollapsingToolbarLayout.class));
+
         }
     }
 }
