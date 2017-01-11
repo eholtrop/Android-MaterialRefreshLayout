@@ -188,7 +188,7 @@ public class MaterialRefreshLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (isRefreshing || canChildScrollUp() || !isAppBarExpanded()) {
+        if (isRefreshing || canChildScrollUp() || !isAppBarExpanded() || !isEnabled()) {
             return false;
         }
         switch (ev.getAction()) {
@@ -231,7 +231,7 @@ public class MaterialRefreshLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        if (isRefreshing || canChildScrollUp() || !isAppBarExpanded()) {
+        if (isRefreshing || canChildScrollUp() || !isAppBarExpanded() || !isEnabled()) {
             return false;
         }
 
